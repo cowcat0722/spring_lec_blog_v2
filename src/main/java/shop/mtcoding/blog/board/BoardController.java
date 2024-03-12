@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -43,5 +44,18 @@ public class BoardController {
     public String save(@PathVariable Integer id) {
         boardNativeRepository.deleteById(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
+        Board board = boardNativeRepository.findById(id);
+        req.setAttribute("board",board);
+        return "/board/update-form";
+    }
+
+    @PostMapping("/board/{id}/update")
+    public String update(@PathVariable Integer id, String username, String title, String content) {
+        boardNativeRepository.updateById(id, username, title, content);
+        return "redirect:/board/"+id;
     }
 }

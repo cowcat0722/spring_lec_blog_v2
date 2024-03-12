@@ -11,6 +11,20 @@ import java.util.List;
 @Repository
 public class BoardNativeRepository {
     private final EntityManager em;
+
+    @Transactional
+    public void updateById(int id, String username, String title, String content) {
+        String q = """
+                update board_tb set username = ?, title = ?, content = ? where id = ?
+                """;
+        em.createNativeQuery(q)
+                .setParameter(1,username)
+                .setParameter(2,title)
+                .setParameter(3,content)
+                .setParameter(4,id)
+                .executeUpdate();
+    }
+
     @Transactional
     public void deleteById(int id) {
             String q = """

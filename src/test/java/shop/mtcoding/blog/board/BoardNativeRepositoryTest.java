@@ -18,6 +18,22 @@ public class BoardNativeRepositoryTest {
     private BoardNativeRepository boardNativeRepository;
 
     @Test
+    public void updateById_test() {
+        // given
+        int id = 1;
+        String title = "수정 제목1";
+        String content = "수정 내용1";
+        String username = "수정 이름";
+        // when
+        boardNativeRepository.updateById(id,username,title,content);
+        // then
+        Board board = boardNativeRepository.findById(id);
+        assertThat(board.getTitle()).isEqualTo(title);
+        assertThat(board.getContent()).isEqualTo(content);
+        assertThat(board.getUsername()).isEqualTo(username);
+    }
+
+    @Test
     public void deleteById_test() {
         // given
         int id = 1;
