@@ -11,12 +11,21 @@ import java.util.List;
 @Repository
 public class BoardNativeRepository {
     private final EntityManager em;
+    @Transactional
+    public void deleteById(int id) {
+            String q = """
+                delete from board_tb where id = ?
+                """;
+            em.createNativeQuery(q)
+                    .setParameter(1, id)
+                    .executeUpdate();
+    }
 
     public Board findById(int id) {
         String q = """
                 select * from board_tb where id = ?;
                 """;
-        Board board = (Board) em.createNativeQuery(q,Board.class).setParameter(1,id).getSingleResult();
+        Board board = (Board) em.createNativeQuery(q, Board.class).setParameter(1, id).getSingleResult();
         return board;
     }
 
@@ -24,7 +33,7 @@ public class BoardNativeRepository {
         String q = """
                 select * from board_tb order by id desc
                 """;
-        List<Board> boardList = em.createNativeQuery(q,Board.class).getResultList();
+        List<Board> boardList = em.createNativeQuery(q, Board.class).getResultList();
         return boardList;
     }
 
@@ -33,10 +42,10 @@ public class BoardNativeRepository {
         String q = """
                 insert into board_tb(username, title, content, created_at) values (?,?,?,now())
                 """;
-        em.createNativeQuery(q, Board.class)
-                .setParameter(1,username)
-                .setParameter(2,title)
-                .setParameter(3,content)
+        em.createNativeQuery(q)
+                .setParameter(1, username)
+                .setParameter(2, title)
+                .setParameter(3, content)
                 .executeUpdate();
     }
 }

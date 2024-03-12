@@ -38,4 +38,10 @@ public class BoardController {
         boardNativeRepository.save(username, title, content);
         return "redirect:/";
     }
+
+    @PostMapping("/board/{id}/delete")
+    public String save(@PathVariable Integer id) {
+        boardNativeRepository.deleteById(id);
+        return "redirect:/";
+    }
 }
