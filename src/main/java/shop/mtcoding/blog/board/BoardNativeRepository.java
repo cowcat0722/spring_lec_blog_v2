@@ -12,6 +12,14 @@ import java.util.List;
 public class BoardNativeRepository {
     private final EntityManager em;
 
+    public Board findById(int id) {
+        String q = """
+                select * from board_tb where id = ?;
+                """;
+        Board board = (Board) em.createNativeQuery(q,Board.class).setParameter(1,id).getSingleResult();
+        return board;
+    }
+
     public List<Board> findALL() {
         String q = """
                 select * from board_tb order by id desc
