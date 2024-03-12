@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.board;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -10,12 +9,23 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Import(BoardNativeRepository.class)
+@Import(BoardPersistRepository.class)
 @DataJpaTest
-public class BoardNativeRepositoryTest {
+public class BoardPersistRepositoryTest {
 
     @Autowired
-    private BoardNativeRepository boardNativeRepository;
+    private BoardPersistRepository boardPersistRepository;
+
+    @Test
+    public void save_test() {
+        // given
+        Board board = new Board("제목5","내용","홍길동");
+
+        // when
+        boardPersistRepository.save(board);
+        System.out.println("save_test : " + board);
+        // then
+    }
 
     @Test
     public void updateById_test() {
@@ -25,9 +35,9 @@ public class BoardNativeRepositoryTest {
         String content = "수정 내용1";
         String username = "수정 이름";
         // when
-        boardNativeRepository.updateById(id,username,title,content);
+        boardPersistRepository.updateById(id,username,title,content);
         // then
-        Board board = boardNativeRepository.findById(id);
+        Board board = boardPersistRepository.findById(id);
         assertThat(board.getTitle()).isEqualTo(title);
         assertThat(board.getContent()).isEqualTo(content);
         assertThat(board.getUsername()).isEqualTo(username);
@@ -38,9 +48,9 @@ public class BoardNativeRepositoryTest {
         // given
         int id = 1;
         // when
-        boardNativeRepository.deleteById(id);
+        boardPersistRepository.deleteById(id);
         //then
-        List<Board> boardList = boardNativeRepository.findALL();
+        List<Board> boardList = boardPersistRepository.findALL();
         assertThat(boardList.size()).isEqualTo(3);
     }
 
@@ -49,7 +59,7 @@ public class BoardNativeRepositoryTest {
         // given
         int id = 1;
         // when
-        Board board = boardNativeRepository.findById(id);
+        Board board = boardPersistRepository.findById(id);
         // then
 //        System.out.println("findById_test : " + board);
 
@@ -64,7 +74,7 @@ public class BoardNativeRepositoryTest {
         // given
 
         // when
-        List<Board> boardList = boardNativeRepository.findALL();
+        List<Board> boardList = boardPersistRepository.findALL();
         // then
         System.out.println("findAll_test/size : " + boardList.size());
         System.out.println("findAll_test/username : " + boardList.get(2).getUsername());
