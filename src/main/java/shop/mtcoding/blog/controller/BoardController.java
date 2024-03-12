@@ -11,9 +11,9 @@ public class BoardController {
         return "index";
     }
 
-    @GetMapping("/board/saveForm")
+    @GetMapping("/board/save-form")
     public String saveForm() {
-        return "save-form";
+        return "/board/save-form";
     }
 
     @GetMapping("/board/1")
