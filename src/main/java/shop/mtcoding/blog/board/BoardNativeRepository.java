@@ -1,16 +1,24 @@
 package shop.mtcoding.blog.board;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.Transient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Repository
-public class BoardRepository {
+public class BoardNativeRepository {
     private final EntityManager em;
+
+    public List<Board> findALL() {
+        String q = """
+                select * from board_tb order by id desc
+                """;
+        List<Board> boardList = em.createNativeQuery(q,Board.class).getResultList();
+        return boardList;
+    }
 
     @Transactional
     public void save(String username, String title, String content) {

@@ -1,17 +1,22 @@
 package shop.mtcoding.blog.board;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class BoardController {
-    private final BoardRepository boardRepository;
+    private final BoardNativeRepository boardNativeRepository;
 
     @GetMapping("/")
-    public String index() {
+    public String index(HttpServletRequest req) {
+        List<Board> boardList = boardNativeRepository.findALL();
+        req.setAttribute("boardList",boardList);
         return "index";
     }
 
@@ -27,7 +32,7 @@ public class BoardController {
 
     @PostMapping("/board/save")
     public String save(String username, String title, String content) {
-        boardRepository.save(username, title, content);
+        boardNativeRepository.save(username, title, content);
         return "redirect:/";
     }
 }
