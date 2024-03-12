@@ -3,6 +3,9 @@ package shop.mtcoding.blog.board;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import shop.mtcoding.blog.util.MyDateUtil;
+
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -16,5 +19,9 @@ public class Board {
     private String title;
     private String content;
     private String username;
-    private String createdAt;
+    private Timestamp createdAt;
+
+    public String getTime() {
+        return MyDateUtil.timestampFormat(createdAt);
+    }
 }
