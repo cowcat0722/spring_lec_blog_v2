@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.board;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,11 +45,8 @@ public class BoardPersistRepository {
     }
 
     public List<Board> findALL() {
-        String q = """
-                select * from board_tb order by id desc
-                """;
-        List<Board> boardList = em.createNativeQuery(q, Board.class).getResultList();
-        return boardList;
+        Query query = em.createQuery("select b from Board b order by b.id desc",Board.class);
+        return query.getResultList();
     }
 
     @Transactional

@@ -16,6 +16,7 @@ public class BoardPersistRepositoryTest {
     @Autowired
     private BoardPersistRepository boardPersistRepository;
 
+
     @Test
     public void save_test() {
         // given
