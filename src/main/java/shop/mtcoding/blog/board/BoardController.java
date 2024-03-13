@@ -13,12 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class BoardController {
-    private final BoardPersistRepository boardPersistRepository;
 
     @GetMapping("/")
     public String index(HttpServletRequest req) {
-        List<Board> boardList = boardPersistRepository.findALL();
-        req.setAttribute("boardList",boardList);
+
         return "index";
     }
 
@@ -28,41 +26,33 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id, HttpServletRequest req) {
-        Board board = boardPersistRepository.findById(id);
-        req.setAttribute("board",board);
+    public String detail(@PathVariable Integer id) {
+
+
         return "board/detail";
     }
 
     @PostMapping("/board/save")
-    public String save(BoardRequest.SaveDTO reqDTO) {
-        System.out.println("reqDTO : " + reqDTO);
-        boardPersistRepository.save(reqDTO.toEntity());
+    public String save() {
+
         return "redirect:/";
     }
 
     @PostMapping("/board/{id}/delete")
     public String save(@PathVariable Integer id) {
-        boardPersistRepository.deleteById(id);
+
         return "redirect:/";
     }
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
-        Board board = boardPersistRepository.findById(id);
-        req.setAttribute("board",board);
+
+
         return "/board/update-form";
     }
 
-//    @PostMapping("/board/{id}/update")
-//    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
-//        boardPersistRepository.updateById(id, reqDTO.toEntity());
-//        return "redirect:/board/"+id;
-//    }
-
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
-        boardPersistRepository.updateByIdV2(id, reqDTO);
+    public String update(@PathVariable Integer id) {
         return "redirect:/board/" + id;
     }
 }
