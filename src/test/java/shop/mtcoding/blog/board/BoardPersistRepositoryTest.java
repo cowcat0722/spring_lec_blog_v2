@@ -31,21 +31,25 @@ public class BoardPersistRepositoryTest {
         System.out.println("save_test : " + board);
         // then
     }
+    @Test
+    public void updateByIdV2_test() {
+        // given
+        int id = 1;
+        String title = "제목수정";
+        // when
+        Board board = boardPersistRepository.findById(id);
+        board.setTitle(title);
+        em.flush();
+    }
 
     @Test
     public void updateById_test() {
         // given
-        int id = 1;
-        String title = "수정 제목1";
-        String content = "수정 내용1";
-        String username = "수정 이름";
+        int id = 5;
+        Board board = new Board("수정 제목1","수정 내용1","수정 이름");
         // when
-        boardPersistRepository.updateById(id,username,title,content);
-        // then
-        Board board = boardPersistRepository.findById(id);
-        assertThat(board.getTitle()).isEqualTo(title);
-        assertThat(board.getContent()).isEqualTo(content);
-        assertThat(board.getUsername()).isEqualTo(username);
+        boardPersistRepository.updateById(id,board);
+        System.out.println("updateById_test : " + board);
     }
 
     @Test

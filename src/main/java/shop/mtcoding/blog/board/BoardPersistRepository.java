@@ -14,22 +14,28 @@ public class BoardPersistRepository {
     private final EntityManager em;
 
     @Transactional
-    public void updateById(int id, String username, String title, String content) {
+    public void updateByIdV2(int id, BoardRequest.UpdateDTO reqDTO) {
+        Board board = findById(id);
+        board.update(reqDTO);
+    }
+
+    @Transactional
+    public void updateById(int id, Board board) {
         String q = """
-                update board_tb set username = ?, title = ?, content = ? where id = ?
+                update Board b set b.username = :username, b.title = :title, b.content = :content where b.id = :id
                 """;
-        em.createNativeQuery(q)
-                .setParameter(1,username)
-                .setParameter(2,title)
-                .setParameter(3,content)
-                .setParameter(4,id)
+        Query query = em.createQuery(q);
+        query.setParameter("username", board.getUsername())
+                .setParameter("title", board.getTitle())
+                .setParameter("content", board.getContent())
+                .setParameter("id", id)
                 .executeUpdate();
     }
 
     @Transactional
     public void deleteById(int id) {
         Query query = em.createQuery("delete from Board b where b.id = :id");
-        query.setParameter("id",id);
+        query.setParameter("id", id);
         query.executeUpdate();
     }
 
@@ -45,7 +51,7 @@ public class BoardPersistRepository {
     }
 
     public List<Board> findALL() {
-        Query query = em.createQuery("select b from Board b order by b.id desc",Board.class);
+        Query query = em.createQuery("select b from Board b order by b.id desc", Board.class);
 
         return query.getResultList();
     }
