@@ -28,12 +28,15 @@ public class BoardPersistRepository {
 
     @Transactional
     public void deleteById(int id) {
-            String q = """
-                delete from board_tb where id = ?
-                """;
-            em.createNativeQuery(q)
-                    .setParameter(1, id)
-                    .executeUpdate();
+        Query query = em.createQuery("delete from Board b where b.id = :id");
+        query.setParameter("id",id);
+        query.executeUpdate();
+    }
+
+    @Transactional
+    public void deleteById2(int id) {
+        Board board = findById(id);
+        em.remove(board); // PC에 객체 지우고, (트랜잭션 종료시) 삭제 쿼리를 전송함
     }
 
     public Board findById(int id) {
