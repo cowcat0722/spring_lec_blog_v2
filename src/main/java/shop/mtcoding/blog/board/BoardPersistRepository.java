@@ -37,15 +37,13 @@ public class BoardPersistRepository {
     }
 
     public Board findById(int id) {
-        String q = """
-                select * from board_tb where id = ?;
-                """;
-        Board board = (Board) em.createNativeQuery(q, Board.class).setParameter(1, id).getSingleResult();
+        Board board = em.find(Board.class, id);
         return board;
     }
 
     public List<Board> findALL() {
         Query query = em.createQuery("select b from Board b order by b.id desc",Board.class);
+
         return query.getResultList();
     }
 

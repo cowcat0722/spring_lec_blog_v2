@@ -59,8 +59,12 @@ public class BoardPersistRepositoryTest {
     public void findById_test() {
         // given
         int id = 1;
+        int id2 = 2;
         // when
         Board board = boardPersistRepository.findById(id);
+        board = boardPersistRepository.findById(id);
+        Board board2 = boardPersistRepository.findById(id2);
+        board2 = boardPersistRepository.findById(id2);
         // then
 //        System.out.println("findById_test : " + board);
 
