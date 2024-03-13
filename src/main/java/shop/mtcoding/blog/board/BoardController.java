@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class BoardController {
+    private final BoardRepository boardRepository;
 
     @GetMapping("/")
     public String index(HttpServletRequest req) {
@@ -26,9 +27,9 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id) {
-
-
+    public String detail(@PathVariable Integer id, HttpServletRequest req) {
+        Board board = boardRepository.findByIdJoinUser(id);
+        req.setAttribute("board", board);
         return "board/detail";
     }
 
