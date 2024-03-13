@@ -8,6 +8,16 @@
 - 글삭제하기 (완)
 - 글수정하기 (완)
 
+### V1
+- branch : master
+- hash : 7a7a
+
+### PersistContext
+- branch : pc
+- hash : d30c
+
+### 
+
 ## 기술스택
 
 - Springboot 3.2
