@@ -4,11 +4,17 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import shop.mtcoding.blog.board.Board;
 
 @RequiredArgsConstructor
 @Repository
 public class UserRepository {
     private final EntityManager em;
+
+    public User findById(int id) {
+        User User = em.find(User.class, id);
+        return User;
+    }
 
     @Transactional
     public User save(User user) {
@@ -25,4 +31,10 @@ public class UserRepository {
         return user;
     }
 
+    @Transactional
+    public void update(int id, String password, String email) {
+        User user = findById(id);
+        user.setPassword(password);
+        user.setEmail(email);
+    }
 }
