@@ -3,6 +3,7 @@ package shop.mtcoding.blog.board;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +41,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/{id}/delete")
-    public String save(@PathVariable Integer id) {
+    public String delete(@PathVariable Integer id) {
         boardPersistRepository.deleteById(id);
         return "redirect:/";
     }
@@ -52,9 +53,12 @@ public class BoardController {
         return "/board/update-form";
     }
 
+    @Transactional
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id, String username, String title, String content) {
-        boardPersistRepository.updateById(id, username, title, content);
+    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
+        // 아래 코드를 Repository에 작성하여 만들어 줘도 됨.
+        Board board = boardPersistRepository.findById(id);
+        board.update(reqDTO);
         return "redirect:/board/"+id;
     }
 }
