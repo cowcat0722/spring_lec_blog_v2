@@ -1,11 +1,14 @@
 package shop.mtcoding.blog.user;
 
+import jakarta.persistence.NoResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import shop.mtcoding.blog._core.errors.exception.Exception400;
+import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog.board.BoardRequest;
 
 @RequiredArgsConstructor
@@ -16,18 +19,29 @@ public class UserController {
 
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
-        User sessionUser = userRepository.save(reqDTO.toEntity());
-        session.setAttribute("sessionUser",sessionUser);
+        try {
+            User sessionUser = userRepository.save(reqDTO.toEntity());
+            session.setAttribute("sessionUser", sessionUser);
+
+        } catch (NoResultException e) {
+            throw new Exception400("동일한 유저네임이 존재합니다.");
+        }
+
+
         return "redirect:/";
     }
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
-        User sessionUser = userRepository.findByUsernameAndPassword(reqDTO);
 
-        session.setAttribute("sessionUser", sessionUser);
+        try {
+            User sessionUser = userRepository.findByUsernameAndPassword(reqDTO);
+            session.setAttribute("sessionUser", sessionUser);
+            return "redirect:/";
+        } catch (Exception e) {
+            throw new Exception401("유저네임 혹은 비밀번호가 틀렸습니다");
+        }
 
-        return "redirect:/";
     }
 
     @GetMapping("/join-form")
@@ -45,7 +59,7 @@ public class UserController {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
         User user = userRepository.findById(sessionUser.getId());
-        req.setAttribute("user",user);
+        req.setAttribute("user", user);
         return "/user/update-form";
     }
 
