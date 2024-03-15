@@ -12,11 +12,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class BoardController {
-    private final BoardPersistRepository boardNativeRepository;
+    private final BoardPersistRepository boardPersistRepository;
 
     @GetMapping("/")
     public String index(HttpServletRequest req) {
-        List<Board> boardList = boardNativeRepository.findALL();
+        List<Board> boardList = boardPersistRepository.findALL();
         req.setAttribute("boardList",boardList);
         return "index";
     }
@@ -28,33 +28,33 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable Integer id, HttpServletRequest req) {
-        Board board = boardNativeRepository.findById(id);
+        Board board = boardPersistRepository.findById(id);
         req.setAttribute("board",board);
         return "board/detail";
     }
 
     @PostMapping("/board/save")
-    public String save(String username, String title, String content) {
-        boardNativeRepository.save(username, title, content);
+    public String save(BoardRequest.SaveDTO reqDTO) {
+        boardPersistRepository.save(reqDTO.toEntity());
         return "redirect:/";
     }
 
     @PostMapping("/board/{id}/delete")
     public String save(@PathVariable Integer id) {
-        boardNativeRepository.deleteById(id);
+        boardPersistRepository.deleteById(id);
         return "redirect:/";
     }
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
-        Board board = boardNativeRepository.findById(id);
+        Board board = boardPersistRepository.findById(id);
         req.setAttribute("board",board);
         return "/board/update-form";
     }
 
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, String username, String title, String content) {
-        boardNativeRepository.updateById(id, username, title, content);
+        boardPersistRepository.updateById(id, username, title, content);
         return "redirect:/board/"+id;
     }
 }

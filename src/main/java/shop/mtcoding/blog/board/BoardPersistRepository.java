@@ -52,14 +52,8 @@ public class BoardPersistRepository {
     }
 
     @Transactional
-    public void save(String username, String title, String content) {
-        String q = """
-                insert into board_tb(username, title, content, created_at) values (?,?,?,now())
-                """;
-        em.createNativeQuery(q)
-                .setParameter(1, username)
-                .setParameter(2, title)
-                .setParameter(3, content)
-                .executeUpdate();
+    public Board save(Board board) {
+        em.persist(board);
+        return board;
     }
 }
