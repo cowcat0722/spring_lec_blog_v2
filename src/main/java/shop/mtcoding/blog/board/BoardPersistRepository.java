@@ -28,10 +28,10 @@ public class BoardPersistRepository {
     @Transactional
     public void deleteById(int id) {
             String q = """
-                delete from board_tb where id = ?
+                delete from Board b where id = :id
                 """;
-            em.createNativeQuery(q)
-                    .setParameter(1, id)
+            em.createQuery(q)
+                    .setParameter("id", id)
                     .executeUpdate();
     }
 
