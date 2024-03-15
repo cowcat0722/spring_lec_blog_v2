@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
-public class BoardNativeRepository {
+public class BoardPersistRepository {
     private final EntityManager em;
 
     @Transactional
