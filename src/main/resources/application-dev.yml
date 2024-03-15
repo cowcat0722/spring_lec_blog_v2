@@ -5,6 +5,7 @@ server:
       force: true
     session:
       timeout: 30m
+      tracking-modes: COOKIE
   port: 8080
 
 spring:
