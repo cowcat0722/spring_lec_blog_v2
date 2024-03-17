@@ -35,8 +35,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/save")
-    public String save(BoardRequest.SaveDTO reqDTO) {
-        boardPersistRepository.save(reqDTO.toEntity());
+    public String save() {
+
         return "redirect:/";
     }
 
@@ -48,17 +48,15 @@ public class BoardController {
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
-        Board board = boardPersistRepository.findById(id);
-        req.setAttribute("board",board);
+
         return "/board/update-form";
     }
 
-    @Transactional
+
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
+    public String update(@PathVariable Integer id) {
         // 아래 코드를 Repository에 작성하여 만들어 줘도 됨.
-        Board board = boardPersistRepository.findById(id);
-        board.update(reqDTO);
+
         return "redirect:/board/"+id;
     }
 }
