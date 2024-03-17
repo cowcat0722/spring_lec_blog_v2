@@ -43,11 +43,8 @@ public class BoardRepository {
     }
 
     public List<Board> findALL() {
-        String q = """
-                select b from Board b order by b.id desc
-                """;
-        List<Board> boardList = em.createQuery(q, Board.class).getResultList();
-        return boardList;
+       Query query = em.createQuery("select b from Board  b order by b.id desc",Board.class);
+        return query.getResultList();
     }
 
     @Transactional
