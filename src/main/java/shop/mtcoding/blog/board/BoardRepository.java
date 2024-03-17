@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.board;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
-public class BoardPersistRepository {
+public class BoardRepository {
     private final EntityManager em;
 
     @Transactional
@@ -35,8 +36,9 @@ public class BoardPersistRepository {
                     .executeUpdate();
     }
 
-    public Board findById(int id) {
-        Board board = em.find(Board.class,id);
+    public Board findByIdJoinUser(int id) {
+        Query query = em.createQuery("select b from Board b join fetch b.user u where b.id = :id", Board.class);
+        Board board = (Board) query.setParameter("id", id).getSingleResult();
         return board;
     }
 
