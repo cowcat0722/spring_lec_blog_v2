@@ -3,6 +3,7 @@ package shop.mtcoding.blog.user;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Repository
@@ -15,6 +16,12 @@ public class UserRepository {
                 .setParameter("username", reqDTO.getUsername())
                 .setParameter("password", reqDTO.getPassword())
                 .getSingleResult();
+        return user;
+    }
+
+    @Transactional
+    public User save(User user) {
+        em.persist(user);
         return user;
     }
 

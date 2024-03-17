@@ -25,6 +25,13 @@ public class UserController {
         return "redirect:/";
     }
 
+    @PostMapping("/join")
+    public String join(UserRequest.JoinDTO reqDTO) {
+        User sessionUser = userRepository.save(reqDTO.toEntity());
+        session.setAttribute("sessionUser",sessionUser);
+        return "/user/join-form";
+    }
+
     @GetMapping("/join-form")
     public String joinForm() {
         return "/user/join-form";
