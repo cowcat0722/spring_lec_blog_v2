@@ -28,12 +28,8 @@ public class BoardRepository {
 
     @Transactional
     public void deleteById(int id) {
-            String q = """
-                delete from Board b where id = :id
-                """;
-            em.createQuery(q)
-                    .setParameter("id", id)
-                    .executeUpdate();
+        Query query = em.createQuery("delete from Board b where b.id = :id");
+        query.setParameter("id",id).executeUpdate();
     }
 
     public Board findByIdJoinUser(int id) {
