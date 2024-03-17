@@ -51,15 +51,16 @@ public class BoardController {
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
-
+        Board board = boardRepository.findById(id);
+        req.setAttribute("board",board);
         return "/board/update-form";
     }
 
-
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id) {
-        // 아래 코드를 Repository에 작성하여 만들어 줘도 됨.
-
-        return "redirect:/board/"+id;
+    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
+        boardRepository.updateById(id, reqDTO.getTitle(), reqDTO.getContent());
+        return "redirect:/board/" + id;
     }
+
+
 }

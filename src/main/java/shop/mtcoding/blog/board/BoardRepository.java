@@ -14,16 +14,10 @@ public class BoardRepository {
     private final EntityManager em;
 
     @Transactional
-    public void updateById(int id, String username, String title, String content) {
-        String q = """
-                update board_tb set username = ?, title = ?, content = ? where id = ?
-                """;
-        em.createNativeQuery(q)
-                .setParameter(1,username)
-                .setParameter(2,title)
-                .setParameter(3,content)
-                .setParameter(4,id)
-                .executeUpdate();
+    public void updateById(int id, String title, String content) {
+        Board board = findById(id);
+        board.setTitle(title);
+        board.setContent(content);
     }
 
     @Transactional
@@ -35,6 +29,11 @@ public class BoardRepository {
     public Board findByIdJoinUser(int id) {
         Query query = em.createQuery("select b from Board b join fetch b.user u where b.id = :id", Board.class);
         Board board = (Board) query.setParameter("id", id).getSingleResult();
+        return board;
+    }
+
+    public Board findById(int id) {
+        Board board = em.find(Board.class,id);
         return board;
     }
 
