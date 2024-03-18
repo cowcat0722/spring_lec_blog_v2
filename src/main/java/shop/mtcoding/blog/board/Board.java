@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.board;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Board {
 
     //    @JoinColumn(name = "user___id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore // paging 오류때문에 Json변환 할때 user는 무시함.
     private User user; // default = user_id
 
     @CreationTimestamp
