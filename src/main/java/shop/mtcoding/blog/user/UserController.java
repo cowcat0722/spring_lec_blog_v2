@@ -45,7 +45,7 @@ public class UserController {
     public String updateForm(HttpServletRequest req) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        User user = userService.회원수정폼(sessionUser.getId());
+        User user = userService.회원조회(sessionUser.getId());
         req.setAttribute("user", user);
         return "/user/update-form";
     }

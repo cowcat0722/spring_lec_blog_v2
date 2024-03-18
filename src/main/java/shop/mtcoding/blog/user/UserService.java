@@ -34,7 +34,7 @@ public class UserService {
         return sessionUser;
     }
 
-    public User 회원수정폼(int id) {
+    public User 회원조회(int id) {
         return userJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
     }

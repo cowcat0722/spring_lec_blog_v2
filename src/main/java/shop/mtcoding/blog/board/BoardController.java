@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.board;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -78,8 +77,7 @@ public class BoardController {
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardService.글수정폼(id, sessionUser.getId());
+        Board board = boardService.글조회(id);
         req.setAttribute("board", board);
         return "/board/update-form";
     }

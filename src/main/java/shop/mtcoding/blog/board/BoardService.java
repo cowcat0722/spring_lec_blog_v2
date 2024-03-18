@@ -33,14 +33,9 @@ public class BoardService {
     }
 
     @Transactional
-    public Board 글수정폼(int boardId, int sessionUserId) {
+    public Board 글조회(int boardId) {
         Board board = boardJPARepository.findById(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다."));
-
-        if (sessionUserId != board.getUser().getId()) {
-            throw new Exception403("게시글을 수정페이지 이동 권한이 없습니다.");
-
-        }
         return board;
     }
 }
