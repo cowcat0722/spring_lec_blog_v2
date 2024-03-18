@@ -1,7 +1,7 @@
 package shop.mtcoding.blog.board;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -11,26 +11,27 @@ import shop.mtcoding.blog.user.User;
 
 import java.sql.Timestamp;
 
-@NoArgsConstructor // Entity는 Default 생성자가 무조건 있어야한다.
-@Entity
+@NoArgsConstructor
 @Data
 @Table(name = "board_tb")
+@Entity
 public class Board {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 프라이머리 키
-
+    private Integer id;
     private String title;
     private String content;
 
-    //    @JoinColumn(name = "user___id")
+    //@JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore // paging 오류때문에 Json변환 할때 user는 무시함.
-    private User user; // default = user_id
+    private User user; // db -> user_id
 
-    @CreationTimestamp
+    @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
+
+    @Transient // 테이블 생성이 안됨
+    private boolean isOwner;
+
 
     @Builder
     public Board(Integer id, String title, String content, User user, Timestamp createdAt) {
