@@ -46,12 +46,12 @@ public class BoardController {
         // 로그인을 하고 게시글의 주인이면 isOwner가 true가 된다.
         boolean isOwner = false;
         if (sessionUser != null) {
-            if (sessionUser.getId() == board.getUser().getId()){
+            if (sessionUser.getId() == board.getUser().getId()) {
                 isOwner = true;
             }
         }
 
-        req.setAttribute("isOwner",isOwner);
+        req.setAttribute("isOwner", isOwner);
         req.setAttribute("board", board);
         return "board/detail";
     }
@@ -59,7 +59,7 @@ public class BoardController {
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardService.글쓰기(reqDTO,sessionUser);
+        boardService.글쓰기(reqDTO, sessionUser);
         return "redirect:/";
     }
 
@@ -78,24 +78,16 @@ public class BoardController {
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
-        Board board = boardRepository.findById(id);
-        if (board == null) {
-            throw new Exception404("해당 게시글을 찾을 수 없습니다.");
-        }
-        req.setAttribute("board",board);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        Board board = boardService.글수정폼(id, sessionUser.getId());
+        req.setAttribute("board", board);
         return "/board/update-form";
     }
 
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardRepository.findById(id);
-
-        if (sessionUser.getId() != board.getUser().getId()) {
-            throw new Exception403("게시글을 수정 할 권한이 없습니다.");
-        }
-
-        boardRepository.updateById(id, reqDTO.getTitle(), reqDTO.getContent());
+        boardService.글수정(id, sessionUser.getId(), reqDTO);
         return "redirect:/board/" + id;
     }
 }
