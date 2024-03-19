@@ -34,6 +34,7 @@ public class UserService {
         return sessionUser;
     }
 
+    @Transactional
     public User update(int id, UserRequest.UpdateDTO reqDTO){
         User user = userJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
@@ -41,4 +42,11 @@ public class UserService {
         user.setEmail(reqDTO.getEmail());
         return user;
     }
+
+    public User findById(int id){
+        return userJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
+    }
+
+
 }
