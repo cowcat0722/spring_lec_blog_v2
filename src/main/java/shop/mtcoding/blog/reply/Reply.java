@@ -21,7 +21,7 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // 프라이머리 키
 
-    private String content;
+    private String comment;
 
     //    @JoinColumn(name = "user___id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,9 +34,9 @@ public class Reply {
     private Timestamp createdAt;
 
     @Builder
-    public Reply(Integer id, String content, User user, Board board, Timestamp createdAt) {
+    public Reply(Integer id, String comment, User user, Board board, Timestamp createdAt) {
         this.id = id;
-        this.content = content;
+        this.comment = comment;
         this.user = user;
         this.board = board;
         this.createdAt = createdAt;

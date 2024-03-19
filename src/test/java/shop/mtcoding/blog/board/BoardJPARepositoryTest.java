@@ -16,19 +16,8 @@ class BoardJPARepositoryTest {
     @Autowired
     private UserJPARepository userJPARepository;
 
-    @Test
-    public void save_test() {
-        // given
-        User user = User.builder()
-                .username("chan")
-                .password("12345")
-                .email("chan@nate.com")
-                .build();
-        // when
-        userJPARepository.save(user);
-        List<User> userList = userJPARepository.findAll();
-        // then
-        System.out.println("save_test : " + userList.size());
-    }
+    @Autowired BoardService boardService;
+
+
 
 }

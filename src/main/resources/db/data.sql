@@ -10,7 +10,7 @@ values (1, '제목1', '내용1', now()),
        (1, '제목2', '내용2', now()),
        (2, '제목3', '내용3', now()),
        (3, '제목4', '내용4', now());
-
+--
 insert into reply_tb(comment, board_id, user_id, created_at) values('댓글1', 4, 1, now());
 insert into reply_tb(comment, board_id, user_id, created_at) values('댓글2', 4, 1, now());
 insert into reply_tb(comment, board_id, user_id, created_at) values('댓글3', 4, 2, now());
