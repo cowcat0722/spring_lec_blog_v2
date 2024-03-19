@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
-            User sessionUser = userRepository.findByUsernameAndPassword(reqDTO);
+            User sessionUser = userService.signIn(reqDTO);
             session.setAttribute("sessionUser", sessionUser);
             return "redirect:/";
     }

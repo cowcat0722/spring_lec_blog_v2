@@ -30,6 +30,6 @@ public class UserService {
     public User signIn(UserRequest.LoginDTO reqDTO){
         User sessionUser = userJPARepository.findByUsernameAndPassword(reqDTO.getUsername(),reqDTO.getPassword())
                 .orElseThrow(() -> new Exception401("인증되지 않았습니다."));
-        return sessionUser
+        return sessionUser;
     }
 }
