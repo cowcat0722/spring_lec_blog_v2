@@ -15,18 +15,14 @@ import shop.mtcoding.blog.board.BoardRequest;
 @Controller
 public class UserController {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final HttpSession session;
 
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO reqDTO) {
-        try {
-            User sessionUser = userRepository.save(reqDTO.toEntity());
+
+            User sessionUser = userService.signUp(reqDTO);
             session.setAttribute("sessionUser", sessionUser);
-
-        } catch (NoResultException e) {
-            throw new Exception400("동일한 유저네임이 존재합니다.");
-        }
-
 
         return "redirect:/";
     }
