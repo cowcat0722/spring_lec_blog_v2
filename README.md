@@ -11,7 +11,7 @@
 - 회원가입
 - 로그인/로그아웃
 
-### V1
+### V1 익명게시판 만들기
 - branch : master
 - hash : 7a7a
 
@@ -19,17 +19,21 @@
 - branch : pc
 - hash : d30c
 
-### step3
+### step3 인증블로그, ORM
 - branch : step3
 - hash : 3ef9
 
-### step4
+### step4 인증처리, 권한처리
 - branch : step4
 - hash : 5be4
 
 ### step5 JpaRepository
 - branch : step5
-- hash : ded8 (step4 마지막)
+- hash : ded8
+
+### step6
+- branch : step6
+- hash : 224a
 
 ## 기술스택
 
