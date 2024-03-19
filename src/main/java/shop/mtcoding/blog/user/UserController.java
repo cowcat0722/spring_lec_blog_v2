@@ -14,7 +14,6 @@ import shop.mtcoding.blog.board.BoardRequest;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
-    private final UserRepository userRepository;
     private final UserService userService;
     private final HttpSession session;
 

@@ -89,13 +89,7 @@ public class BoardController {
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardRepository.findById(id);
-
-        if (sessionUser.getId() != board.getUser().getId()) {
-            throw new Exception403("게시글을 수정 할 권한이 없습니다.");
-        }
-
-        boardRepository.updateById(id, reqDTO.getTitle(), reqDTO.getContent());
+        boardService.updateById(id, sessionUser.getId(), reqDTO);
         return "redirect:/board/" + id;
     }
 }
