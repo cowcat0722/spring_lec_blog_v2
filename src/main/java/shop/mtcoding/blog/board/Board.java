@@ -32,11 +32,11 @@ public class Board {
     @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY) // Entity 객체의 변수명
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // Entity 객체의 변수명
     private List<Reply> replies = new ArrayList<>();
 
     @Transient // 테이블 생성이 안됨
-    private boolean isOwner;
+    private boolean isBoardOwner;
 
 
     @Builder
