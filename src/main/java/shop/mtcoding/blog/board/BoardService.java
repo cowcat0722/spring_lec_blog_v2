@@ -1,11 +1,14 @@
 package shop.mtcoding.blog.board;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception403;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.user.User;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -45,5 +48,10 @@ public class BoardService {
         }
 
         boardJPARepository.deleteById(id);
+    }
+
+    public List<Board> findAll() {
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        return boardJPARepository.findAll(sort);
     }
 }
