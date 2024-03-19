@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception400;
+import shop.mtcoding.blog._core.errors.exception.Exception401;
 
 import java.util.Optional;
 
@@ -24,5 +25,11 @@ public class UserService {
         // 핵심 로직
         User sessionUser = userJPARepository.save(reqDTO.toEntity());
         return sessionUser;
+    }
+
+    public User signIn(UserRequest.LoginDTO reqDTO){
+        User sessionUser = userJPARepository.findByUsernameAndPassword(reqDTO.getUsername(),reqDTO.getPassword())
+                .orElseThrow(() -> new Exception401("인증되지 않았습니다."));
+        return sessionUser
     }
 }
