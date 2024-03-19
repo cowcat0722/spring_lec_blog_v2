@@ -36,6 +36,9 @@ public class Board {
     @CreationTimestamp
     private Timestamp createdAt;
 
+    @Transient // 테이블 생성이 안됨
+    private boolean isBoardOwner;
+
     @Builder
     public Board(Integer id, String title, String content, User user, Timestamp createdAt) {
         this.id = id;
