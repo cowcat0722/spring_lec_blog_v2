@@ -18,6 +18,7 @@ import java.util.List;
 @Controller
 public class BoardController {
     private final BoardRepository boardRepository;
+    private final BoardService boardService;
     private final HttpSession session;
 
     @GetMapping("/")
@@ -58,7 +59,7 @@ public class BoardController {
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        boardRepository.save(reqDTO.toEntity(sessionUser));
+        boardService.save(reqDTO, sessionUser);
         return "redirect:/";
     }
 
