@@ -29,4 +29,10 @@ public class BoardService {
         board.setTitle(reqDTO.getTitle());
         board.setContent(reqDTO.getContent());
     }
+
+    public Board findById(Integer id) {
+        Board board = boardJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다."));
+        return board;
+    }
 }
