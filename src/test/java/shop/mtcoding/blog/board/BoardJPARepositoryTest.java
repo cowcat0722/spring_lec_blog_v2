@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import shop.mtcoding.blog.user.User;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,13 +58,22 @@ class BoardJPARepositoryTest {
 
     }
 
+    @Test
+    public void findByIdJoinUserAndReplies_test() {
+        // given
+        int id = 4;
+        // when
+        Board board = boardJPARepository.findByIdJoinUserAndReplies(id).get();
+        // then
+    }
+
     // findByIdJoinUser
     @Test
     public void findByIdJoinUser_test() {
         // given
         int id = 1;
         // when
-        boardJPARepository.findByIdJoinUser(id);
+        Board board = boardJPARepository.findByIdJoinUser(id).get();
         // then
 
     }

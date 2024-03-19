@@ -9,7 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.board.Board;
 import shop.mtcoding.blog.user.User;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+
 
 @NoArgsConstructor
 @Data
