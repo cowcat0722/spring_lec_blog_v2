@@ -30,7 +30,7 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // default = user_id
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Reply> replies = new ArrayList<>();
 
     @CreationTimestamp
