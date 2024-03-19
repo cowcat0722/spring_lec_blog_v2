@@ -54,4 +54,10 @@ public class BoardService {
         Sort sort = Sort.by(Sort.Direction.DESC,"id");
         return boardJPARepository.findAll(sort);
     }
+
+    public BoardResponse.DetailDTO boardDetail(Integer boardId, User sessionUser) {
+        Board board = boardJPARepository.findByIdJoinUser(boardId)
+                .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다."));
+        return new BoardResponse.DetailDTO(board, sessionUser);
+    }
 }
