@@ -34,9 +34,10 @@ public class UserService {
         return sessionUser;
     }
 
-    public User 회원조회(int id) {
-        return userJPARepository.findById(id)
+    public UserResponse.DTO 회원조회(int id) {
+        User user = userJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
+        return new UserResponse.DTO(user); // 엔티티 생명 종료
     }
 
     @Transactional

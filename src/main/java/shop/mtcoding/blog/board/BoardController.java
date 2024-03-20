@@ -20,8 +20,8 @@ public class BoardController {
     // TODO : 글목록조회 API 필요 -> @GetMapping("/") -> 완료
     @GetMapping("/")
     public ResponseEntity<?> main() {
-        List<Board> boardList = boardService.글목록조회();
-        return ResponseEntity.ok(new ApiUtil(boardList));
+        List<BoardResponse.MainDTO> respDTO = boardService.글목록조회();
+        return ResponseEntity.ok(new ApiUtil(respDTO));
     }
 
     // TODO : 글상세보기 API 필요 -> @GetMapping("/api/boards/{id}/detail") -> 완료
