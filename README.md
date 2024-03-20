@@ -31,9 +31,13 @@
 - branch : step5
 - hash : ded8
 
-### step6
+### step6 댓글
 - branch : step6
 - hash : 224a
+
+### step7 RestAPI 전환
+- branch : step7
+- hash : a462
 
 ## 기술스택
 
