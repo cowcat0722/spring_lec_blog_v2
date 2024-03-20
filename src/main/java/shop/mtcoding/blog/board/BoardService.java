@@ -17,12 +17,12 @@ public class BoardService {
     private final BoardJPARepository boardJPARepository;
 
     @Transactional
-    public void 글쓰기(BoardRequest.SaveDTO reqDTO, User sessionUser) {
-        boardJPARepository.save(reqDTO.toEntity(sessionUser));
+    public Board 글쓰기(BoardRequest.SaveDTO reqDTO, User sessionUser) {
+        return boardJPARepository.save(reqDTO.toEntity(sessionUser));
     }
 
     @Transactional
-    public void 글수정(int boardId, int sessionUserId, BoardRequest.UpdateDTO reqDTO) {
+    public Board 글수정(int boardId, int sessionUserId, BoardRequest.UpdateDTO reqDTO) {
         // 조회 및 예외 처리
         Board board = boardJPARepository.findById(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다."));
@@ -33,6 +33,7 @@ public class BoardService {
         // 글 수정
         board.setTitle(reqDTO.getTitle());
         board.setContent(reqDTO.getContent());
+        return board;
     }
 
     @Transactional

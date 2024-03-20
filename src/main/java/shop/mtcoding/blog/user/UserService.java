@@ -16,14 +16,14 @@ public class UserService {
     private final UserJPARepository userJPARepository;
 
     @Transactional
-    public void 회원가입(UserRequest.JoinDTO reqDTO) {
+    public User 회원가입(UserRequest.JoinDTO reqDTO) {
         // 유저네임 중복검사(예외처리)
         Optional<User> userOP = userJPARepository.findByUsername(reqDTO.getUsername());
         if (userOP.isPresent()) {
             throw new Exception400("중복된 유저네임이 존재합니다.");
         }
 
-        userJPARepository.save(reqDTO.toEntity());
+        return userJPARepository.save(reqDTO.toEntity());
     }
 
     public User 로그인(UserRequest.LoginDTO reqDTO) {
