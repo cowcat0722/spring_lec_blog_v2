@@ -9,34 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import shop.mtcoding.blog.user.User;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Controller
 public class BoardController {
     private final BoardService boardService;
     private final HttpSession session;
 
-    @GetMapping("/")
-    public String index(HttpServletRequest req) {
-        List<Board> boardList = boardService.글목록조회();
-        req.setAttribute("boardList", boardList);
-        return "index";
-    }
+    // TODO : 글목록조회 API 필요
 
-    @GetMapping("/board/save-form")
-    public String saveForm() {
-        return "/board/save-form";
-    }
+    // TODO : 글상세보기 API 필요
 
-    @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id, HttpServletRequest req) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardService.글상세보기(id, sessionUser);
-
-        req.setAttribute("board", board);
-        return "board/detail";
-    }
+    // TODO : 글조회 API 필요
 
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO reqDTO) {
@@ -50,13 +33,6 @@ public class BoardController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         boardService.글삭제(id, sessionUser.getId());
         return "redirect:/";
-    }
-
-    @GetMapping("/board/{id}/update-form")
-    public String updateForm(@PathVariable Integer id, HttpServletRequest req) {
-        Board board = boardService.글조회(id);
-        req.setAttribute("board", board);
-        return "/board/update-form";
     }
 
     @PostMapping("/board/{id}/update")
