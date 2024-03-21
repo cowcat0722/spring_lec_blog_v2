@@ -38,6 +38,8 @@
 ### step7 RestAPI 전환
 - branch : step7
 - hash : a462
+  - 프로젝트 정리
+  - DTO 만들기
 
 ## 기술스택
 
